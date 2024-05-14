@@ -1,13 +1,13 @@
 import React from 'react';
-import { TouchableOpacity } from 'react-native';
+import { TouchableOpacity, Text } from 'react-native';
 import tw from 'twrnc';
 
-const title = "";
-const content = "";
+const title = "Test Heading";
+const content = "Test Content";
 
 const NoteBlock = ({title, content}) => {
     return (
-        <TouchableOpacity>
+        <TouchableOpacity style={tw`bg-blue-300 p-5 m-2`}>
             <Text style={tw`text-2xl font-bold`}>{title}</Text>
             <Text style={tw`text-1xl`}>{content}</Text>
         </TouchableOpacity>

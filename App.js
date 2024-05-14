@@ -3,8 +3,7 @@ import tw, { useDeviceContext } from 'twrnc';
 import { Provider } from 'react-redux';
 import { store } from './store';
 import 'react-native-reanimated'; 
-import SingleNote from './components/SingleNote';
-import NoteBlock from './components/NoteBlock';
+import NoteBlockDisplay from './components/NoteBlockDisplay';
 
 function App() {
   useDeviceContext(tw);
@@ -12,7 +11,7 @@ function App() {
   return (
     <Provider store={store}>
       <SafeAreaView style={tw`w-full h-100vh bg-gray-100`}>
-        <SingleNote />
+        <NoteBlockDisplay />
       </SafeAreaView>
     </Provider>
   )

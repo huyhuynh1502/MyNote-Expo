@@ -16,7 +16,7 @@ const SingleNote = () => {
         <SafeAreaView style={tw`m-8`}>
             {/* Text input for heading */}
             <TextInput 
-                style={tw`text-2xl font-bold`}
+                style={tw`text-2xl font-bold my-5`}
                 onChangeText={onChangeTitle}
                 value = {title}
             />
