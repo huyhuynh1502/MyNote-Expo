@@ -10,7 +10,7 @@ function App() {
   return (
     <Provider store={store}>
       <SafeAreaView>
-        <Text style={tw`w-screen mt-16 text-center text-xl`}>
+        <Text style={tw`w-screen mt-16 text-center text-xl bg-slate-500`}>
           Your app code goes here.
         </Text>
       </SafeAreaView>
