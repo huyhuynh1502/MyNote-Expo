@@ -7,7 +7,7 @@ const content = "Test Content";
 
 const NoteBlock = ({title, content}) => {
     return (
-        <TouchableOpacity style={tw`flex-1 bg-blue-300 p-5 m-3 w-50`}>
+        <TouchableOpacity style={tw`bg-blue-300 p-5 m-3`}>
             <Text style={tw`text-2xl font-bold`}>{title}</Text>
             <Text style={tw`text-xl`}>{content}</Text>
         </TouchableOpacity>
