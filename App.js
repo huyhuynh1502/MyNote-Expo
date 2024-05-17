@@ -3,7 +3,6 @@
  * Wrapped in a SafeAreaView React Native component
  */
 
-
 import { SafeAreaView, Text, View } from 'react-native';
 import tw, { useDeviceContext } from 'twrnc';
 import { Provider } from 'react-redux';
@@ -28,10 +27,11 @@ function App() {
         <NavigationContainer>
           <Stack.Navigator>
             {/* Home screen set to Home */}
-            <Stack.Screen name="Home" component={HomePage} />
+            <Stack.Screen name="Home" component={HomePage} options={{title: 'Notes'}} />
 
             {/* Display SingleNote page when click on a NoteBlock */}
             <Stack.Screen name="SingleNote" component={SingleNote} />
+
           </Stack.Navigator>
         </NavigationContainer>
       </SafeAreaView>

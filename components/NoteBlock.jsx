@@ -12,13 +12,16 @@ import { createStackNavigator } from '@react-navigation/native-stack';
 
 const NoteBlock = ({title, content, navigation}) => {
     return (
+        // TouchableOpacity to make the block clickable and more easy to layout
         <TouchableOpacity 
             style={tw`bg-blue-300 p-5 m-3`}
             onPress={() => {
                 navigation.navigate('SingleNote', {title: title, content: content})}}
-            >
-                <Text style={tw`text-2xl font-bold`}>{title}</Text>
-                <Text style={tw`text-xl`}>{content}</Text>
+        >
+
+            <Text style={tw`text-2xl font-bold`}>{title}</Text>
+            <Text style={tw`text-xl`}>{content}</Text>
+            
         </TouchableOpacity>
     )
 }

@@ -10,7 +10,7 @@ import { NavigationContainer } from '@react-navigation/native';
  * URL: https://reactnative.dev/docs/navigation#react-navigation
  * 
  * @param {navigation} -> navigation stack of React Native navigation
- * @param {route} -> route to pass down the title and content ultilzing React Navigation
+ * @param {route} -> route to pass down the title and content similar to documentation example
  * 
  * @returns Single Note component with title and content text input
  */

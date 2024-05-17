@@ -45,6 +45,7 @@ const NoteBlockDisplay = ({ navigation }) => {
 
     return (
         <>
+            {/* Ultilize Masonry List import */}
             <MasonryList
                 style={tw`w-full`}
                 showsVerticalScrollIndicator={false}
