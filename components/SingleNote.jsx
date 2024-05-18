@@ -16,10 +16,18 @@ import { NavigationContainer } from '@react-navigation/native';
  */
 
 const SingleNote = ({ navigation, route }) => {
+    //If route props is null then set no title
+    //-> Will happen when create new note
+    if (route.params == null) {
+        const [title, onChangeTitle] = React.useState('');
+        const [content, onChangeContent] = React.useState('');
+    }
+    
     
     //useState variables for title and content
     const [title, onChangeTitle] = React.useState(route.params.title);
     const [content, onChangeContent] = React.useState(route.params.content);
+    
 
     return (
         <SafeAreaView style={tw`m-8`}>
@@ -27,6 +35,7 @@ const SingleNote = ({ navigation, route }) => {
             <TextInput 
                 style={tw`text-2xl font-bold my-5`}
                 onChangeText={onChangeTitle}
+                placeholder='Untitled'
                 value = {title}
             />
 

@@ -12,6 +12,7 @@ import MasonryList from '@react-native-seoul/masonry-list';
 import { Text } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import SearchBox from './SearchBox';
 
 //Create empty array to hold all Note
 let nbs = [];
@@ -27,7 +28,7 @@ for (var i = 4; i < 16; i++) {
 }
 
 
-const NoteBlockDisplay = ({ navigation }) => {
+const HomePage = ({ navigation }) => {
     /**
      * First render all the notes from the array
      * Then display inside a MasonryList
@@ -45,9 +46,11 @@ const NoteBlockDisplay = ({ navigation }) => {
 
     return (
         <>
+            <SearchBox />
+
             {/* Ultilize Masonry List import */}
             <MasonryList
-                style={tw`w-full`}
+                style={tw`w-full bg-white`}
                 showsVerticalScrollIndicator={false}
                 onEndReachedThreshold={0.1}
                 data={nbs}
@@ -58,4 +61,4 @@ const NoteBlockDisplay = ({ navigation }) => {
     )
 }
 
-export default NoteBlockDisplay
+export default HomePage

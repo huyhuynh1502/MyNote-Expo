@@ -23,14 +23,26 @@ function App() {
     <Provider store={store}>
 
       {/* Base safe area view -> background layout for the application */}
-      <SafeAreaView style={tw`w-full h-100vh bg-gray-100`}>
+      <SafeAreaView style={tw`w-full h-100vh`}>
         <NavigationContainer>
           <Stack.Navigator>
             {/* Home screen set to Home */}
-            <Stack.Screen name="Home" component={HomePage} options={{title: 'Notes'}} />
+            <Stack.Screen 
+              name="Home" 
+              component={HomePage} 
+              options={{title: 'Notes'}} 
+              backgroudColor='transparent'
+            />
 
             {/* Display SingleNote page when click on a NoteBlock */}
-            <Stack.Screen name="SingleNote" component={SingleNote} />
+            <Stack.Screen 
+              name="SingleNote" 
+              component={SingleNote} 
+              options={{
+                title: 'Your Note'
+              }}
+              backgroudColor='transparent'
+            />
 
           </Stack.Navigator>
         </NavigationContainer>
