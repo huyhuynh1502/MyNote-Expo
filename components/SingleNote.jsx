@@ -30,7 +30,7 @@ const SingleNote = ({ navigation, route }) => {
     
 
     return (
-        <SafeAreaView style={tw`m-8`}>
+        <SafeAreaView style={tw`bg-white h-100vh p-3`}>
             {/* Text input for heading */}
             <TextInput 
                 style={tw`text-2xl font-bold my-5`}
