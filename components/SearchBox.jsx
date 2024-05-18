@@ -17,7 +17,7 @@ const SearchBox = () => {
 
     <View style={tw`bg-white`}> 
         <TextInput
-        style={tw`mx-2 my-1 p-2 border border-white rounded rounded-3 bg-gray-200 text-lg`}
+        style={tw`mx-2 my-1 p-2 rounded rounded-3 bg-gray-200 text-lg`}
         placeholder="Search"
         onChangeText={handleSearchChange}
         value={search}

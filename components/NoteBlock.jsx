@@ -19,8 +19,8 @@ const NoteBlock = ({title, content, navigation}) => {
                 navigation.navigate('SingleNote', {title: title, content: content})}}
         >
 
-            <Text style={tw`text-2xl font-bold`}>{title}</Text>
-            <Text style={tw`text-xl`}>{content}</Text>
+            <Text style={tw`text-xl font-bold`}>{title}</Text>
+            <Text style={tw`text-md`}>{content}</Text>
             
         </TouchableOpacity>
     )

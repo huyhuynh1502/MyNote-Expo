@@ -9,7 +9,7 @@ import React from 'react';
 import tw, {useDeviceContext} from 'twrnc';
 import NoteBlock from './NoteBlock';
 import MasonryList from '@react-native-seoul/masonry-list';
-import { Text } from 'react-native';
+import { Text, TouchableOpacity } from 'react-native';
 import { NavigationContainer } from '@react-navigation/native';
 import { createNativeStackNavigator } from '@react-navigation/native-stack';
 import SearchBox from './SearchBox';
@@ -57,6 +57,19 @@ const HomePage = ({ navigation }) => {
                 renderItem={renderItem}
                 numColumns={2}
             />
+
+            {/* Floating button to add new note */}
+            <TouchableOpacity 
+                style={tw`absolute w-12 h-12 justify-center items-center right-5 bottom-5 bg-gray-600 rounded-full`}
+                onPress={() => {
+                    // onPress logic -> to be implemented
+                }}
+                >
+                <Text style={tw`text-xl text-white`}>
+                    {/* Need to implement icon library */}
+                    ADD
+                </Text>
+            </TouchableOpacity>
         </>
     )
 }
