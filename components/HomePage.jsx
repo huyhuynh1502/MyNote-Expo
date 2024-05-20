@@ -17,17 +17,6 @@ import SearchBox from './SearchBox';
 //Create empty array to hold all Note
 let nbs = [];
 
-nbs.push({ title: "Block 1", content: "My first note included lorem ipsum asdfafd" });
-
-nbs.push({ title: "Block 2", content: "Loremsiopsadfafdsfafsffsdff sa df asdfasf asfsadfweaefsdaf" });
-
-nbs.push({ title: "Block 3", content: "Third Note lorem ipsumssadf" });
-
-for (var i = 4; i < 16; i++) {
-    nbs.push({ title: `Block ${i}`, content: `Content ${i}` });
-}
-
-
 const HomePage = ({ navigation }) => {
     /**
      * First render all the notes from the array

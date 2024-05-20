@@ -1,7 +1,8 @@
-import React from 'react'
+import React, {useEffect, useState} from 'react'
 import { TextInput, SafeAreaView } from 'react-native';
 import tw from 'twrnc';
 import { NavigationContainer } from '@react-navigation/native';
+import { useAddNoteMutation, useUpdateNoteMutation } from '../db';
 
 /**
  * Single Note component
@@ -16,25 +17,44 @@ import { NavigationContainer } from '@react-navigation/native';
  */
 
 const SingleNote = ({ navigation, route }) => {
-    //If route props is null then set no title
-    //-> Will happen when create new note
-    if (route.params == null) {
-        const [title, onChangeTitle] = React.useState('');
-        const [content, onChangeContent] = React.useState('');
-    }
+    /*
+    Use state section -> use for dynamic UI title and content edit
+    */
+    const [title, onChangeTitle] = React.useState(route.params ? route.params.title : '');
+
+    const [content, onChangeContent] = React.useState(route.params ? route.params.content  : '');
     
-    
-    //useState variables for title and content
-    const [title, onChangeTitle] = React.useState(route.params.title);
-    const [content, onChangeContent] = React.useState(route.params.content);
-    
+
+    /*
+    useEffect section -> use for dynamic database update
+    */
+    const [addNote] = useAddNoteMutation();
+    const [updateNote] = useUpdateNoteMutation();
+    //Dynamic add and edit from database 
+    //Will be call when ever title or content is updated
+    React.useEffect(() => {
+        const saveNote = async () => {
+            // If the note already exists
+            if (route.params && route.params.id) { 
+
+                await updateNote({ id: route.params.id, title, content });
+            } 
+            // If the note is new
+            else { 
+                await addNote({ title, content });
+            }
+        };
+
+        saveNote();
+    }, [title, content, addNote, updateNote]);
+
 
     return (
         <SafeAreaView style={tw`bg-white h-100vh p-3`}>
             {/* Text input for heading */}
             <TextInput 
                 style={tw`text-2xl font-bold my-5`}
-                onChangeText={onChangeTitle}
+                onChangeText={text => onChangeTitle(text)}
                 placeholder='Untitled'
                 value = {title}
             />
@@ -42,7 +62,7 @@ const SingleNote = ({ navigation, route }) => {
             {/* Text input for content */}
             <TextInput 
                 style={tw`text-xl`}
-                onChangeText={onChangeContent}
+                onChangeText={text => onChangeContent(text)}
                 value = {content}
             />
             
