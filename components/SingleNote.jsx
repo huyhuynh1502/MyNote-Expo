@@ -23,8 +23,21 @@ const SingleNote = ({ navigation, route }) => {
     const [title, setTitle] = useState(route.params.data.title);
     const [content, setContent] = useState(route.params.data.content);
 
-    console.log(title);
-    console.log(content);
+
+
+
+    //Can be optimize due to hooks working asynchronously
+    const titleRef = useRef(title);
+    const contentRef = useRef(content);
+
+    useEffect(() => {
+        titleRef.current = title;
+        contentRef.current = content;
+      }, [title, content]);
+
+
+
+
 
     /*
     Set RTK Query variables
@@ -48,15 +61,17 @@ const SingleNote = ({ navigation, route }) => {
     */
     useEffect(() => {
         const unsubscribe = navigation.addListener('beforeRemove', (e) => {
+            console.log(title);
+            console.log(content);
             //If the note is empty, delete the note
-            if (title == '' && content == '') {
+            if (titleRef.current == '' && contentRef.current == '') {
                 deleteNote(route.params.data);
                 console.log('Note Deleted');
             }
 
             //When note is updated with new title and content
             else {
-                updateNote({id: route.params.data.id, title: title, content: content});
+                updateNote({id: route.params.data.id, title: titleRef.current, content: contentRef.current});
                 console.log('Note Updated');
             }
 
