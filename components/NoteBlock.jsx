@@ -10,17 +10,20 @@ import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/native-stack';
 
 
-const NoteBlock = ({title, content, navigation}) => {
+const NoteBlock = ({item, navigation}) => {
+
+
     return (
         // TouchableOpacity to make the block clickable and more easy to layout
         <TouchableOpacity 
             style={tw`bg-gray-100 m-2 p-2 rounded rounded-3`}
-            onPress={() => {
-                navigation.navigate('SingleNote', {title: title, content: content})}}
+            onPress={() => 
+                navigation.navigate('SingleNote', {data: item})
+            }
         >
 
-            <Text style={tw`text-xl font-bold`}>{title}</Text>
-            <Text style={tw`text-md`}>{content}</Text>
+            <Text style={tw`text-xl font-bold`}>{item.title}</Text>
+            <Text style={tw`text-lg`}>{item.content}</Text>
             
         </TouchableOpacity>
     )

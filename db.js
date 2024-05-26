@@ -2,6 +2,14 @@ import { createApi, fakeBaseQuery } from '@reduxjs/toolkit/query/react'
 import uuid from 'react-native-uuid';
 import AsyncStorage from '@react-native-async-storage/async-storage';
 
+/**
+ * db.js created by Allan Lavell
+ * Comments added in this project to help further understand the code
+ * Note: No modification has been made to the code accept for added comments
+ */
+
+// Create a new API using createApi
+// API endpoint acted as a way to interact with the database
 export const dbApi = createApi({
   reducerPath: 'dbApi',
   tagTypes: ['Notes'],
@@ -16,6 +24,8 @@ export const dbApi = createApi({
       },
       providesTags: (result) => ['Notes']
     }),
+
+    //ASSUME: This is the search function for the notes
     searchNotes: build.query({
       async queryFn(searchString) {
         const serializedNotes = await AsyncStorage.getItem('notes');
@@ -36,6 +46,8 @@ export const dbApi = createApi({
       }, 
       providesTags: (result) => ['Notes']
     }),
+
+    //ASSUME: This is the add note function
     addNote: build.mutation({
       async queryFn(note) {
         const serializedNotes = await AsyncStorage.getItem('notes');
@@ -47,6 +59,8 @@ export const dbApi = createApi({
       },
       invalidatesTags: ['Notes'],
     }),
+
+    //ASSUME: This is the delete note function
     deleteNote: build.mutation({
       async queryFn(note) {
         const serializedNotes = await AsyncStorage.getItem('notes');
@@ -57,6 +71,8 @@ export const dbApi = createApi({
       },
       invalidatesTags: ['Notes'],
     }),
+
+    //ASSUME: This is the update note function
     updateNote: build.mutation({
       async queryFn(note) {
         const serializedNotes = await AsyncStorage.getItem('notes');
@@ -75,4 +91,5 @@ export const dbApi = createApi({
   }),
 })
 
+//Export all the functions from the dbApi
 export const { useFetchNotesQuery, useSearchNotesQuery, useAddNoteMutation, useUpdateNoteMutation, useDeleteNoteMutation } = dbApi

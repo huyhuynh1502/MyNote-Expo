@@ -1,8 +1,8 @@
-import React, {useEffect, useState} from 'react'
+import React, {useEffect, useState, useRef, useLayoutEffect} from 'react'
 import { TextInput, SafeAreaView } from 'react-native';
 import tw from 'twrnc';
 import { NavigationContainer } from '@react-navigation/native';
-import { useAddNoteMutation, useUpdateNoteMutation } from '../db';
+import { useUpdateNoteMutation, useDeleteNoteMutation } from '../db';
 
 /**
  * Single Note component
@@ -13,57 +13,83 @@ import { useAddNoteMutation, useUpdateNoteMutation } from '../db';
  * @param {navigation} -> navigation stack of React Native navigation
  * @param {route} -> route to pass down the title and content similar to documentation example
  * 
- * @returns Single Note component with title and content text input
+ * @returns Single Note component with title and content text input that been dynamically updated from database
  */
 
 const SingleNote = ({ navigation, route }) => {
     /*
-    Use state section -> use for dynamic UI title and content edit
+    Function to edit text input
     */
-    const [title, onChangeTitle] = React.useState(route.params ? route.params.title : '');
+    const [title, setTitle] = useState(route.params.data.title);
+    const [content, setContent] = useState(route.params.data.content);
 
-    const [content, onChangeContent] = React.useState(route.params ? route.params.content  : '');
-    
+    console.log(title);
+    console.log(content);
 
     /*
-    useEffect section -> use for dynamic database update
+    Set RTK Query variables
     */
-    const [addNote] = useAddNoteMutation();
+    const [deleteNote] = useDeleteNoteMutation(); 
     const [updateNote] = useUpdateNoteMutation();
-    //Dynamic add and edit from database 
-    //Will be call when ever title or content is updated
-    React.useEffect(() => {
-        const saveNote = async () => {
-            // If the note already exists
-            if (route.params && route.params.id) { 
 
-                await updateNote({ id: route.params.id, title, content });
-            } 
-            // If the note is new
-            else { 
-                await addNote({ title, content });
+    /*
+    useRef hooks to make app automatically focus on title input when the screen is loaded 
+    And focus on content input when hit enter on title input
+    */
+    const titleInputRef = useRef(null);
+    const focusTitleInput = () => { titleInputRef.current.focus(); }
+    useEffect(() => { focusTitleInput(); }, []);
+
+    const contentInputRef = useRef(null);
+
+
+    /*
+    Auto save when the user go back to the previous screen (home screen)
+    */
+    useEffect(() => {
+        const unsubscribe = navigation.addListener('beforeRemove', (e) => {
+            //If the note is empty, delete the note
+            if (title == '' && content == '') {
+                deleteNote(route.params.data);
+                console.log('Note Deleted');
             }
-        };
 
-        saveNote();
-    }, [title, content, addNote, updateNote]);
+            //When note is updated with new title and content
+            else {
+                updateNote({id: route.params.data.id, title: title, content: content});
+                console.log('Note Updated');
+            }
 
+        });
+
+        return unsubscribe;
+    }, [navigation]);
+
+
+    
 
     return (
         <SafeAreaView style={tw`bg-white h-100vh p-3`}>
-            {/* Text input for heading */}
+            {/* Text input for title */}
             <TextInput 
+                ref={titleInputRef}   //Focus on text input
                 style={tw`text-2xl font-bold my-5`}
-                onChangeText={text => onChangeTitle(text)}
                 placeholder='Untitled'
+                placeholderTextColor='gray'
                 value = {title}
+                onChangeText = {setTitle}
+                //When enter is pressed, focus on content input
+                onSubmitEditing={() => contentInputRef.current.focus()}
             />
 
             {/* Text input for content */}
             <TextInput 
                 style={tw`text-xl`}
-                onChangeText={text => onChangeContent(text)}
                 value = {content}
+                placeholder='Start writing your note here'
+                placeholderTextColor='gray'
+                onChangeText={setContent}
+                ref = {contentInputRef}
             />
             
         </SafeAreaView> 

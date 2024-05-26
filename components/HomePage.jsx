@@ -1,65 +1,78 @@
-/**
- * HomePage.jsx -> Display the homepage of the application
- * Display all the NoteBlock components in a MasonryList
- * Top bar included a search box
- */
-
-
-import React from 'react';
+import React, {useEffect, useState} from 'react';
 import tw, {useDeviceContext} from 'twrnc';
 import NoteBlock from './NoteBlock';
 import MasonryList from '@react-native-seoul/masonry-list';
-import { Text, TouchableOpacity } from 'react-native';
-import { NavigationContainer } from '@react-navigation/native';
-import { createNativeStackNavigator } from '@react-navigation/native-stack';
+import { Text, TouchableOpacity, View } from 'react-native';
 import SearchBox from './SearchBox';
+import { useFetchNotesQuery, useAddNoteMutation, useSearchNotesQuery, useDeleteNoteMutation } from '../db';
 
-//Create empty array to hold all Note
-let nbs = [];
+
+/**
+ * Home Page component: Display all notes in a masonry list
+ * 
+ * @param {navigation} navigation prop from React Navigation
+ * 
+ * @returns 
+ *  SearcBox -> search notes
+ *  MasonryList of NoteBlocks
+ *  TouchableOpacity -> Floating button to add new note
+ */
 
 const HomePage = ({ navigation }) => {
-    /**
-     * First render all the notes from the array
-     * Then display inside a MasonryList
-     * @param { navigation } -> props from navigation stack and then passed down to NoteBlock
-     * @returns 
-     */
+    //Use searchNotesQuery to fetch notes
+    const {data: searchData, error, isLoading} = useSearchNotesQuery('');
+
+    //Create addNote mutation with aliasing
+    const [addNote, {data: addNoteData, error: addNoteError}] = useAddNoteMutation();
+
+    //Navigate to SingleNote when addNoteData is call (useEffect)
+    useEffect(() => {
+        if (addNoteData != undefined) {
+            console.log(addNoteData.title);
+            navigation.navigate('SingleNote', {data: addNoteData});
+        }
+    }, [addNoteData]);  
+
+
+    //Function to render NoteBlock with MasonryList prop
     const renderItem = ({ item }) => (      
         <NoteBlock 
-            title={item.title} 
-            content={item.content} 
+            item = {item}
             navigation={navigation}
         />
     )
 
-
     return (
-        <>
+        <View style={tw`bg-white flex flex-1`}>
             <SearchBox />
 
-            {/* Ultilize Masonry List import */}
-            <MasonryList
-                style={tw`w-full bg-white`}
-                showsVerticalScrollIndicator={false}
-                onEndReachedThreshold={0.1}
-                data={nbs}
-                renderItem={renderItem}
-                numColumns={2}
-            />
+            {searchData ?
+                <MasonryList
+                    style={tw`w-full bg-white`}
+                    showsVerticalScrollIndicator={false}
+                    onEndReachedThreshold={0.1}
+                    data={searchData}
+                    renderItem={renderItem}
+                    keyExtractor={(item) => item.id}
+                    numColumns={2}
+                />
+                : <></>
+            }
 
             {/* Floating button to add new note */}
             <TouchableOpacity 
                 style={tw`absolute w-12 h-12 justify-center items-center right-5 bottom-5 bg-gray-600 rounded-full`}
+
                 onPress={() => {
-                    // onPress logic -> to be implemented
+                    addNote({title: '', content: ''});
                 }}
-                >
+            >
                 <Text style={tw`text-xl text-white`}>
                     {/* Need to implement icon library */}
                     ADD
                 </Text>
             </TouchableOpacity>
-        </>
+        </View>
     )
 }
 
