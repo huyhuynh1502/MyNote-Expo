@@ -23,7 +23,8 @@ const SingleNote = ({ navigation, route }) => {
     const [deleteNote] = useDeleteNoteMutation(); 
     const [updateNote] = useUpdateNoteMutation();
 
-    // NOTE: can be further optimize
+
+    // NOTE: can be further optimize (Curently not working as expected)
     const [isDelete, setIsDelete] = useState(false); 
 
 
@@ -63,7 +64,7 @@ const SingleNote = ({ navigation, route }) => {
     */
     useEffect(() => {
         const unsubscribe = navigation.addListener('beforeRemove', (e) => {
-            
+
             //If use click on delete button
             if (isDelete) {
                 console.log('Will return');
@@ -99,6 +100,7 @@ const SingleNote = ({ navigation, route }) => {
                 <Button 
                 onPress={() => {
                     setIsDelete(true);
+                    console.log('setIsDelete is: ' + isDelete);
                     deleteNote(route.params.data);
                     console.log('Note Deleted by delete button');
                     navigation.navigate('Home');
@@ -120,6 +122,7 @@ const SingleNote = ({ navigation, route }) => {
                 placeholderTextColor='gray'
                 value = {title}
                 onChangeText = {setTitle}
+                maxLength={40}
                 //When enter is pressed, focus on content input
                 onSubmitEditing={() => contentInputRef.current.focus()}
             />
