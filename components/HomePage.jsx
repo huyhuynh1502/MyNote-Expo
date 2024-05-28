@@ -18,10 +18,9 @@ import { useFetchNotesQuery, useAddNoteMutation, useSearchNotesQuery, useDeleteN
  */
 
 const HomePage = ({ navigation }) => {
-    //Use searchNotesQuery to fetch notes
+    //Use searchNotesQuery to fetch notes and useState to change search value
     const [search, setSearch] = useState('');
     const {data: searchData, error, isLoading} = useSearchNotesQuery(search);
-
     const handleSearchChange = (value) => {
         setSearch(value);
     }
@@ -49,7 +48,10 @@ const HomePage = ({ navigation }) => {
     return (
         <View style={tw`bg-white flex flex-1`}>
 
-            {/* Can be optimize without using view */}
+            {/* 
+            NOTE:
+            Can be optimize without using view 
+            */}
             <View style={tw`bg-white`}> 
             <TextInput
             style={tw`mx-2 my-1 p-2 rounded rounded-3 bg-gray-200 text-lg`}

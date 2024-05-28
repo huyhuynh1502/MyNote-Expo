@@ -22,8 +22,18 @@ const NoteBlock = ({item, navigation}) => {
             }
         >
 
-            <Text style={tw`text-xl font-bold`}>{item.title}</Text>
-            <Text style={tw`text-lg`}>{item.content}</Text>
+            <Text 
+            style={tw`text-xl font-bold`}
+            numberOfLines={1}
+            >
+                {item.title}
+            </Text>
+            <Text 
+            style={tw`text-lg`}
+            numberOfLines={17}
+            >
+                {item.content}
+            </Text>
             
         </TouchableOpacity>
     )

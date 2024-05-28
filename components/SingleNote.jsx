@@ -63,6 +63,7 @@ const SingleNote = ({ navigation, route }) => {
     */
     useEffect(() => {
         const unsubscribe = navigation.addListener('beforeRemove', (e) => {
+            
             //If use click on delete button
             if (isDelete) {
                 console.log('Will return');
@@ -110,7 +111,7 @@ const SingleNote = ({ navigation, route }) => {
     
 
     return (
-        <SafeAreaView style={tw`bg-white h-100vh p-3`}>
+        <SafeAreaView style={tw`flex-1 bg-white h-100vh p-3`}>
             {/* Text input for title */}
             <TextInput 
                 ref={titleInputRef}   //Focus on text input
@@ -125,12 +126,13 @@ const SingleNote = ({ navigation, route }) => {
 
             {/* Text input for content */}
             <TextInput 
-                style={tw`text-xl`}
+                style={tw`flex-1 text-xl`}
                 value = {content}
                 placeholder='Start writing your note here'
                 placeholderTextColor='gray'
                 onChangeText={setContent}
                 ref = {contentInputRef}
+                multiline
             />
             
         </SafeAreaView> 
