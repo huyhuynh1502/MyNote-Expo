@@ -2,8 +2,7 @@ import React, {useEffect, useState} from 'react';
 import tw, {useDeviceContext} from 'twrnc';
 import NoteBlock from './NoteBlock';
 import MasonryList from '@react-native-seoul/masonry-list';
-import { Text, TouchableOpacity, View } from 'react-native';
-import SearchBox from './SearchBox';
+import { Text, TouchableOpacity, View, TextInput } from 'react-native';
 import { useFetchNotesQuery, useAddNoteMutation, useSearchNotesQuery, useDeleteNoteMutation } from '../db';
 
 
@@ -20,7 +19,12 @@ import { useFetchNotesQuery, useAddNoteMutation, useSearchNotesQuery, useDeleteN
 
 const HomePage = ({ navigation }) => {
     //Use searchNotesQuery to fetch notes
-    const {data: searchData, error, isLoading} = useSearchNotesQuery('');
+    const [search, setSearch] = useState('');
+    const {data: searchData, error, isLoading} = useSearchNotesQuery(search);
+
+    const handleSearchChange = (value) => {
+        setSearch(value);
+    }
 
     //Create addNote mutation with aliasing
     const [addNote, {data: addNoteData, error: addNoteError}] = useAddNoteMutation();
@@ -44,7 +48,16 @@ const HomePage = ({ navigation }) => {
 
     return (
         <View style={tw`bg-white flex flex-1`}>
-            <SearchBox />
+
+            {/* Can be optimize without using view */}
+            <View style={tw`bg-white`}> 
+            <TextInput
+            style={tw`mx-2 my-1 p-2 rounded rounded-3 bg-gray-200 text-lg`}
+            placeholder="Search"
+            onChangeText={handleSearchChange}
+            value={search}
+            />
+            </View>
 
             {searchData ?
                 <MasonryList

@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useRef, useLayoutEffect} from 'react'
-import { TextInput, SafeAreaView } from 'react-native';
+import { TextInput, SafeAreaView, Button } from 'react-native';
 import tw from 'twrnc';
 import { NavigationContainer } from '@react-navigation/native';
 import { useUpdateNoteMutation, useDeleteNoteMutation } from '../db';
@@ -18,12 +18,20 @@ import { useUpdateNoteMutation, useDeleteNoteMutation } from '../db';
 
 const SingleNote = ({ navigation, route }) => {
     /*
+    Set RTK Query variables
+    */
+    const [deleteNote] = useDeleteNoteMutation(); 
+    const [updateNote] = useUpdateNoteMutation();
+
+    // NOTE: can be further optimize
+    const [isDelete, setIsDelete] = useState(false); 
+
+
+    /*
     Function to edit text input
     */
     const [title, setTitle] = useState(route.params.data.title);
     const [content, setContent] = useState(route.params.data.content);
-
-
 
 
     //Can be optimize due to hooks working asynchronously
@@ -38,12 +46,6 @@ const SingleNote = ({ navigation, route }) => {
 
 
 
-
-    /*
-    Set RTK Query variables
-    */
-    const [deleteNote] = useDeleteNoteMutation(); 
-    const [updateNote] = useUpdateNoteMutation();
 
     /*
     useRef hooks to make app automatically focus on title input when the screen is loaded 
@@ -61,8 +63,13 @@ const SingleNote = ({ navigation, route }) => {
     */
     useEffect(() => {
         const unsubscribe = navigation.addListener('beforeRemove', (e) => {
-            console.log(title);
-            console.log(content);
+            //If use click on delete button
+            if (isDelete) {
+                console.log('Will return');
+                return;
+            }
+
+
             //If the note is empty, delete the note
             if (titleRef.current == '' && contentRef.current == '') {
                 deleteNote(route.params.data);
@@ -81,6 +88,25 @@ const SingleNote = ({ navigation, route }) => {
     }, [navigation]);
 
 
+
+    /*
+    Creat delete button on the top navigation bar
+    */
+    useLayoutEffect(() => {
+        navigation.setOptions({
+            headerRight: () => (
+                <Button 
+                onPress={() => {
+                    setIsDelete(true);
+                    deleteNote(route.params.data);
+                    console.log('Note Deleted by delete button');
+                    navigation.navigate('Home');
+                }} 
+                title="Delete"
+                />
+            ),
+        });
+    }, [navigation]);
     
 
     return (
