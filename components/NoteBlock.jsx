@@ -16,20 +16,20 @@ const NoteBlock = ({item, navigation}) => {
     return (
         // TouchableOpacity to make the block clickable and more easy to layout
         <TouchableOpacity 
-            style={tw`bg-gray-100 m-2 p-2 rounded rounded-3`}
+            style={tw`bg-gray-100 rounded rounded-3 mx-auto w-[92%] my-2`}
             onPress={() => 
                 navigation.navigate('SingleNote', {data: item})
             }
         >
 
             <Text 
-            style={tw`text-xl font-bold`}
+            style={tw`text-xl font-bold px-3 py-1`}
             numberOfLines={1}
             >
                 {item.title}
             </Text>
             <Text 
-            style={tw`text-lg`}
+            style={tw`text-lg px-3 py-1`}
             numberOfLines={17}
             >
                 {item.content}

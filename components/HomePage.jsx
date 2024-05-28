@@ -49,16 +49,15 @@ const HomePage = ({ navigation }) => {
         <View style={tw`bg-white flex flex-1`}>
 
             {/* 
-            NOTE:
-            Can be optimize without using view 
+            NOTE: Can be optimize without using view 
             */}
-            <View style={tw`bg-white`}> 
-            <TextInput
-            style={tw`mx-2 my-1 p-2 rounded rounded-3 bg-gray-200 text-lg`}
-            placeholder="Search"
-            onChangeText={handleSearchChange}
-            value={search}
-            />
+            <View style={tw``}> 
+                <TextInput
+                style={tw`mx-2 my-1 p-2 rounded rounded-3 bg-gray-200 text-lg`}
+                placeholder="Search"
+                onChangeText={handleSearchChange}
+                value={search}
+                />
             </View>
 
             {searchData ?

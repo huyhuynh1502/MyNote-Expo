@@ -25,7 +25,7 @@ const SingleNote = ({ navigation, route }) => {
 
 
     // NOTE: can be further optimize (Curently not working as expected)
-    const [isDelete, setIsDelete] = useState(false); 
+    let isDelete = false;
 
 
     /*
@@ -35,7 +35,7 @@ const SingleNote = ({ navigation, route }) => {
     const [content, setContent] = useState(route.params.data.content);
 
 
-    //Can be optimize due to hooks working asynchronously
+    //useRef hooks due to hooks working asynchronously
     const titleRef = useRef(title);
     const contentRef = useRef(content);
 
@@ -43,9 +43,6 @@ const SingleNote = ({ navigation, route }) => {
         titleRef.current = title;
         contentRef.current = content;
       }, [title, content]);
-
-
-
 
 
     /*
@@ -67,13 +64,13 @@ const SingleNote = ({ navigation, route }) => {
 
             //If use click on delete button
             if (isDelete) {
-                console.log('Will return');
-                return;
+                deleteNote(route.params.data);
+                console.log('Note Deleted by User');
             }
 
 
             //If the note is empty, delete the note
-            if (titleRef.current == '' && contentRef.current == '') {
+            else if (titleRef.current == '' && contentRef.current == '') {
                 deleteNote(route.params.data);
                 console.log('Note Deleted');
             }
@@ -90,19 +87,15 @@ const SingleNote = ({ navigation, route }) => {
     }, [navigation]);
 
 
-
     /*
     Creat delete button on the top navigation bar
     */
-    useLayoutEffect(() => {
+    useEffect(() => {
         navigation.setOptions({
             headerRight: () => (
                 <Button 
                 onPress={() => {
-                    setIsDelete(true);
-                    console.log('setIsDelete is: ' + isDelete);
-                    deleteNote(route.params.data);
-                    console.log('Note Deleted by delete button');
+                    isDelete = true;
                     navigation.navigate('Home');
                 }} 
                 title="Delete"
@@ -117,7 +110,7 @@ const SingleNote = ({ navigation, route }) => {
             {/* Text input for title */}
             <TextInput 
                 ref={titleInputRef}   //Focus on text input
-                style={tw`text-2xl font-bold my-5`}
+                style={tw`text-2xl font-bold my-5 px-3`}
                 placeholder='Untitled'
                 placeholderTextColor='gray'
                 value = {title}
@@ -129,7 +122,7 @@ const SingleNote = ({ navigation, route }) => {
 
             {/* Text input for content */}
             <TextInput 
-                style={tw`flex-1 text-xl`}
+                style={tw`flex-1 text-xl px-3`}
                 value = {content}
                 placeholder='Start writing your note here'
                 placeholderTextColor='gray'
