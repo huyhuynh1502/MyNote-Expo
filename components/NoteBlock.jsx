@@ -1,6 +1,6 @@
 import React from 'react';
 import { TouchableOpacity, Text } from 'react-native';
-import tw from 'twrnc';
+import tw, { useAppColorScheme } from 'twrnc';
 import { NavigationContainer } from '@react-navigation/native';
 import { createStackNavigator } from '@react-navigation/native-stack';
 
@@ -14,19 +14,21 @@ import { createStackNavigator } from '@react-navigation/native-stack';
  */
 
 const NoteBlock = ({item, navigation}) => {
+    //twrnc hooks to change the color scheme
+    const [colorScheme, toggleColorScheme, setColorScheme] = useAppColorScheme(tw);
 
     //Display all components for NoteBlock
     return (
         // TouchableOpacity to make the block clickable and more easy to layout
         <TouchableOpacity 
-            style={tw`bg-gray-100 rounded rounded-3 mx-auto w-[92%] my-2 shadow-md`}
+            style={tw`bg-gray-100 rounded rounded-3 mx-auto w-[92%] my-2 shadow-md dark:bg-gray-800`}
             onPress={() => 
                 navigation.navigate('SingleNote', {data: item})
             }
         >
             {/* Text display for title */}
             <Text 
-            style={tw`text-xl font-bold px-3 py-1`}
+            style={tw`text-xl font-bold px-3 py-1 dark:text-white`}
             numberOfLines={2}
             >
                 {item.title}
@@ -34,7 +36,7 @@ const NoteBlock = ({item, navigation}) => {
 
             {/* Text display for contents */}
             <Text 
-            style={tw`text-lg px-3 py-1`}
+            style={tw`text-lg px-3 py-1 dark:text-white`}
             numberOfLines={17}
             >
                 {item.content}
