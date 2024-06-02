@@ -100,8 +100,8 @@ const HomePage = ({ navigation }) => {
         <View style={tw`bg-white flex flex-1 dark:bg-gray-900`}>
             {/* Search box for finding notes */}
             <TextInput
-            style={tw`mx-2 my-1 p-2 rounded rounded-3 bg-gray-200 text-lg shadow-md 
-            dark:bg-gray-700 dark:text-white`}
+            style={tw`mx-2 my-1 p-2 rounded rounded-3 bg-gray-200 text-lg 
+            light: shadow-md dark:bg-gray-700 dark:text-white`}
             placeholder="Search"
             onChangeText={handleSearchChange}
             value={search}
@@ -126,7 +126,8 @@ const HomePage = ({ navigation }) => {
 
             {/* Floating button to add new note */}
             <TouchableOpacity 
-                style={tw`absolute w-13 h-13 justify-center items-center right-5 bottom-5 bg-gray-500 rounded-full shadow-lg`}
+                style={tw`absolute w-13 h-13 justify-center items-center right-5 bottom-5 bg-gray-500 rounded-full
+                light:shadow-lg`}
 
                 onPress={() => {
                     addNote({title: '', content: ''});
