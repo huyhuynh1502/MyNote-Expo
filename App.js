@@ -1,5 +1,5 @@
 import { SafeAreaView, Text, View } from 'react-native';
-import tw, { useDeviceContext } from 'twrnc';
+import tw, { useDeviceContext, useAppColorScheme } from 'twrnc';
 import { Provider } from 'react-redux';
 import { store } from './store';
 import 'react-native-reanimated'; 
@@ -17,8 +17,23 @@ const Stack = createNativeStackNavigator();
  */
 
 function App() {
-  useDeviceContext(tw);
 
+  /*From twrnc documentation for changing color scheme (light/dark mode)
+  URL: https://www.npmjs.com/package/twrnc#enabling-device-context-prefixes
+  */
+  useDeviceContext(tw, {
+    // opt OUT of listening to DEVICE color scheme events
+    observeDeviceColorSchemeChanges: false,
+    // and supply an initial color scheme
+    initialColorScheme: `light`, 
+    // 'light' | 'dark' | 'device'
+  });
+
+  // use the `useAppColorScheme` hook anywhere to get a reference to the current
+  // colorscheme, with functions to modify it (triggering re-renders) when you need
+  const [colorScheme, toggleColorScheme, setColorScheme] = useAppColorScheme(tw);
+
+  //Render the app
   return (
     <Provider store={store}>
 
