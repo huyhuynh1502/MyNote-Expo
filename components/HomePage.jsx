@@ -3,8 +3,7 @@ import tw, {useDeviceContext} from 'twrnc';
 import NoteBlock from './NoteBlock';
 import MasonryList from '@react-native-seoul/masonry-list';
 import { Text, TouchableOpacity, View, TextInput } from 'react-native';
-import { useFetchNotesQuery, useAddNoteMutation, useSearchNotesQuery, useDeleteNoteMutation } from '../db';
-
+import { useAddNoteMutation, useSearchNotesQuery, useDeleteNoteMutation } from '../db';
 
 /**
  * Home Page component: Display all notes in a masonry list
@@ -12,12 +11,15 @@ import { useFetchNotesQuery, useAddNoteMutation, useSearchNotesQuery, useDeleteN
  * @param {navigation} navigation prop from React Navigation
  * 
  * @returns 
- *  SearcBox -> search notes
- *  MasonryList of NoteBlocks
- *  TouchableOpacity -> Floating button to add new note
+ * MasonryList of NoteBlocks
+ * TouchableOpacity -> Floating button to add new note
  */
 
 const HomePage = ({ navigation }) => {
+    /**
+    * This function is quite complicated. Here, instead of using useFetchNoteQuery, we use searchNotesQuery to fetch notes.
+    * This create a dynamic display when the user search for a note.
+    */ 
     //Use searchNotesQuery to fetch notes and useState to change search value
     const [search, setSearch] = useState('');
     const {data: searchData, error, isLoading} = useSearchNotesQuery(search);
@@ -47,19 +49,17 @@ const HomePage = ({ navigation }) => {
 
     return (
         <View style={tw`bg-white flex flex-1`}>
+            {/* Search box for finding notes */}
+            <TextInput
+            style={tw`mx-2 my-1 p-2 rounded rounded-3 bg-gray-200 text-lg`}
+            placeholder="Search"
+            onChangeText={handleSearchChange}
+            value={search}
+            />
 
-            {/* 
-            NOTE: Can be optimize without using view 
+            {/* used the searchData RTK hooks to display all the notes
+            Create empty React Fragment if searchData is empty
             */}
-            <View style={tw``}> 
-                <TextInput
-                style={tw`mx-2 my-1 p-2 rounded rounded-3 bg-gray-200 text-lg`}
-                placeholder="Search"
-                onChangeText={handleSearchChange}
-                value={search}
-                />
-            </View>
-
             {searchData ?
                 <MasonryList
                     style={tw`w-full bg-white`}

@@ -1,9 +1,8 @@
 import React, {useEffect, useState, useRef, useLayoutEffect} from 'react'
-import { TextInput, SafeAreaView, Button } from 'react-native';
+import { TextInput, SafeAreaView, Button, TouchableOpacity } from 'react-native';
 import tw from 'twrnc';
 import { NavigationContainer } from '@react-navigation/native';
 import { useUpdateNoteMutation, useDeleteNoteMutation } from '../db';
-
 /**
  * Single Note component
  * -> Ultilize React Naviagtion Route to pass down the title and content
@@ -22,9 +21,8 @@ const SingleNote = ({ navigation, route }) => {
     */
     const [deleteNote] = useDeleteNoteMutation(); 
     const [updateNote] = useUpdateNoteMutation();
-
-
-    // NOTE: can be further optimize (Curently not working as expected)
+    
+    //Boolean variable to differentiate between delete by user and delete by empty note
     let isDelete = false;
 
 
@@ -57,8 +55,14 @@ const SingleNote = ({ navigation, route }) => {
 
 
     /*
-    Auto save when the user go back to the previous screen (home screen)
+    Here is a quite complicated useEffect hook. 
+    If the click on the delete button, isDelete will be set to true and the useEffect will be called because the button redirect to the Home page -> call the deleteNote function
+
+    If the note is empty, the app will automatically delete the note. useRef is called because the hooks work asynchronously. (variable are prefference at the time the hook is instanciated)
+
+    Else, auto update note whether if the user edit the note or not.
     */
+
     useEffect(() => {
         const unsubscribe = navigation.addListener('beforeRemove', (e) => {
 
@@ -89,6 +93,7 @@ const SingleNote = ({ navigation, route }) => {
 
     /*
     Creat delete button on the top navigation bar
+    When press button, isDelete is set to false and the app will redirect to the Home page -> call the useEffect hook above.
     */
     useEffect(() => {
         navigation.setOptions({
@@ -97,9 +102,12 @@ const SingleNote = ({ navigation, route }) => {
                 onPress={() => {
                     isDelete = true;
                     navigation.navigate('Home');
+                    
                 }} 
-                title="Delete"
-                />
+                title='Delete'
+                >
+
+                </Button>
             ),
         });
     }, [navigation]);
