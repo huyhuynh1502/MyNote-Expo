@@ -47,18 +47,39 @@ const HomePage = ({ navigation }) => {
         />
     );
 
+    const [lightMode, setLightMode] = useState(true);
+
+    const toDarkModeButton = () => {
+        return (
+            <TouchableOpacity
+                style={tw`ml-3`}
+                onPress={() => setLightMode(false)}
+            >
+                <Text style={tw`text-2xl`}>🌑</Text>
+            </TouchableOpacity>
+        );
+    }
+
+    const toLightModeButton = () => {
+        return (
+            <TouchableOpacity
+                style={tw`ml-3`}
+                onPress={() => setLightMode(true)}
+            >
+                <Text style={tw`text-2xl`}>☀️</Text>
+            </TouchableOpacity>
+
+        );
+    }
+
     //Add theme button to the header
     useEffect(() => {
         navigation.setOptions({
             headerLeft: () => (
-                <Button 
-                title='Theme'
-                >
-
-                </Button>
+                lightMode ? toDarkModeButton() : toLightModeButton()
             ),
         });
-    }, [navigation]);
+    }, [navigation, lightMode]);
 
     return (
         <View style={tw`bg-white flex flex-1`}>
