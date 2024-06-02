@@ -29,8 +29,7 @@ function App() {
     // 'light' | 'dark' | 'device'
   });
 
-  // use the `useAppColorScheme` hook anywhere to get a reference to the current
-  // colorscheme, with functions to modify it (triggering re-renders) when you need
+  // use the `useAppColorScheme` hook anywhere to get a reference to the current colorscheme, with functions to modify it (triggering re-renders) when you need
   const [colorScheme, toggleColorScheme, setColorScheme] = useAppColorScheme(tw);
 
   //Render the app

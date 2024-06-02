@@ -1,5 +1,5 @@
 import React, {useEffect, useState} from 'react';
-import tw, {useDeviceContext} from 'twrnc';
+import tw, {useDeviceContext, useAppColorScheme } from 'twrnc';
 import NoteBlock from './NoteBlock';
 import MasonryList from '@react-native-seoul/masonry-list';
 import { Text, TouchableOpacity, View, TextInput, Button } from 'react-native';
@@ -53,11 +53,17 @@ const HomePage = ({ navigation }) => {
     */
     const [lightMode, setLightMode] = useState(true);
 
+    //twrnc hooks to change the color scheme
+    const [colorScheme, toggleColorScheme, setColorScheme] = useAppColorScheme(tw);
+
     const toDarkModeButton = () => {
         return (
             <TouchableOpacity
                 style={tw`ml-3`}
-                onPress={() => setLightMode(false)}
+                onPress={() => {
+                    setLightMode(false);
+                    toggleColorScheme();
+                }}
             >
                 <Text style={tw`text-2xl`}>🌑</Text>
             </TouchableOpacity>
@@ -68,7 +74,10 @@ const HomePage = ({ navigation }) => {
         return (
             <TouchableOpacity
                 style={tw`ml-3`}
-                onPress={() => setLightMode(true)}
+                onPress={() => {
+                    setLightMode(true);
+                    toggleColorScheme();
+                }}
             >
                 <Text style={tw`text-2xl`}>☀️</Text>
             </TouchableOpacity>
@@ -83,15 +92,16 @@ const HomePage = ({ navigation }) => {
                 lightMode ? toDarkModeButton() : toLightModeButton()
             ),
         });
-    }, [navigation, lightMode]);
+    }, [navigation, lightMode, colorScheme]);
 
 
     //Display all components for HomePage
     return (
-        <View style={tw`bg-white flex flex-1`}>
+        <View style={tw`bg-white flex flex-1 dark:bg-gray-900`}>
             {/* Search box for finding notes */}
             <TextInput
-            style={tw`mx-2 my-1 p-2 rounded rounded-3 bg-gray-200 text-lg shadow-md`}
+            style={tw`mx-2 my-1 p-2 rounded rounded-3 bg-gray-200 text-lg shadow-md 
+            dark:bg-gray-700 dark:text-white`}
             placeholder="Search"
             onChangeText={handleSearchChange}
             value={search}
@@ -102,7 +112,8 @@ const HomePage = ({ navigation }) => {
             */}
             {searchData ?
                 <MasonryList
-                    style={tw`w-full bg-white`}
+                    style={tw`w-full bg-white
+                    dark:bg-gray-900`}
                     showsVerticalScrollIndicator={false}
                     onEndReachedThreshold={0.1}
                     data={searchData}
