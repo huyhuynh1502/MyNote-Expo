@@ -27,7 +27,7 @@ const NoteBlock = ({item, navigation}) => {
             {/* Text display for title */}
             <Text 
             style={tw`text-xl font-bold px-3 py-1`}
-            numberOfLines={1}
+            numberOfLines={2}
             >
                 {item.title}
             </Text>
