@@ -1,4 +1,4 @@
-import React, {useEffect, useState} from 'react';
+import React, {useEffect, useState, useLayoutEffect} from 'react';
 import tw, {useDeviceContext, useAppColorScheme } from 'twrnc';
 import NoteBlock from './NoteBlock';
 import MasonryList from '@react-native-seoul/masonry-list';
@@ -86,11 +86,14 @@ const HomePage = ({ navigation }) => {
     }
 
     //Add theme button to the header
-    useEffect(() => {
+    useLayoutEffect(() => {
         navigation.setOptions({
             headerLeft: () => (
                 lightMode ? toDarkModeButton() : toLightModeButton()
             ),
+
+            headerStyle: lightMode ? tw`bg-white` : tw`bg-gray-900`,
+            headerTitleStyle: lightMode ? tw`text-black` : tw`text-white`,
         });
     }, [navigation, lightMode, colorScheme]);
 
