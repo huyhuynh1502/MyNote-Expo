@@ -2,7 +2,7 @@ import React, {useEffect, useState} from 'react';
 import tw, {useDeviceContext} from 'twrnc';
 import NoteBlock from './NoteBlock';
 import MasonryList from '@react-native-seoul/masonry-list';
-import { Text, TouchableOpacity, View, TextInput } from 'react-native';
+import { Text, TouchableOpacity, View, TextInput, Button } from 'react-native';
 import { useAddNoteMutation, useSearchNotesQuery, useDeleteNoteMutation } from '../db';
 
 /**
@@ -45,7 +45,20 @@ const HomePage = ({ navigation }) => {
             item = { item }
             navigation={ navigation }
         />
-    )
+    );
+
+    //Add theme button to the header
+    useEffect(() => {
+        navigation.setOptions({
+            headerLeft: () => (
+                <Button 
+                title='Theme'
+                >
+
+                </Button>
+            ),
+        });
+    }, [navigation]);
 
     return (
         <View style={tw`bg-white flex flex-1`}>
