@@ -47,6 +47,10 @@ const HomePage = ({ navigation }) => {
         />
     );
 
+    /*
+    Create a useState for lightMode to change the theme of the app.
+    2 function to that return TouchableOpacity with emoji to change the theme.
+    */
     const [lightMode, setLightMode] = useState(true);
 
     const toDarkModeButton = () => {
