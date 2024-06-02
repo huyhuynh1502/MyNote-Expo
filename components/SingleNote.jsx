@@ -104,7 +104,7 @@ const SingleNote = ({ navigation, route }) => {
                     navigation.navigate('Home');
                     
                 }} 
-                title='Delete'
+                title='🗑️'
                 >
 
                 </Button>
