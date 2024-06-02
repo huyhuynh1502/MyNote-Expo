@@ -81,6 +81,8 @@ const HomePage = ({ navigation }) => {
         });
     }, [navigation, lightMode]);
 
+
+    //Display all components for HomePage
     return (
         <View style={tw`bg-white flex flex-1`}>
             {/* Search box for finding notes */}

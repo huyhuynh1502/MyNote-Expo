@@ -15,7 +15,7 @@ import { createStackNavigator } from '@react-navigation/native-stack';
 
 const NoteBlock = ({item, navigation}) => {
 
-
+    //Display all components for NoteBlock
     return (
         // TouchableOpacity to make the block clickable and more easy to layout
         <TouchableOpacity 

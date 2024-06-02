@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useRef, useLayoutEffect} from 'react'
-import { TextInput, SafeAreaView, Button, TouchableOpacity } from 'react-native';
+import { TextInput, SafeAreaView, Button, TouchableOpacity, Text } from 'react-native';
 import tw from 'twrnc';
 import { NavigationContainer } from '@react-navigation/native';
 import { useUpdateNoteMutation, useDeleteNoteMutation } from '../db';
@@ -95,24 +95,30 @@ const SingleNote = ({ navigation, route }) => {
     Creat delete button on the top navigation bar
     When press button, isDelete is set to false and the app will redirect to the Home page -> call the useEffect hook above.
     */
+    const deleteButton = () => {
+        return (
+            <TouchableOpacity
+                style={tw`mr-3`}
+                onPress={() => {
+                    isDelete = true;
+                    navigation.navigate('Home');  
+            }} 
+            >
+                <Text style={tw`text-2xl`}>🗑️</Text>
+            </TouchableOpacity>
+        );
+    }
+
     useEffect(() => {
         navigation.setOptions({
             headerRight: () => (
-                <Button 
-                onPress={() => {
-                    isDelete = true;
-                    navigation.navigate('Home');
-                    
-                }} 
-                title='🗑️'
-                >
-
-                </Button>
+                deleteButton()
             ),
         });
     }, [navigation]);
     
 
+    //Display all components for SingleNote
     return (
         <SafeAreaView style={tw`flex-1 bg-white h-100vh p-3`}>
             {/* Text input for title */}
