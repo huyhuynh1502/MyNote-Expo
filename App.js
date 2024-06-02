@@ -1,8 +1,3 @@
-/**
- * Homepage for the application
- * Wrapped in a SafeAreaView React Native component
- */
-
 import { SafeAreaView, Text, View } from 'react-native';
 import tw, { useDeviceContext } from 'twrnc';
 import { Provider } from 'react-redux';
@@ -15,6 +10,11 @@ import { createNativeStackNavigator } from '@react-navigation/native-stack';
 
 //Create stack navigator with the Stack Navigator imported from react-navigation
 const Stack = createNativeStackNavigator();
+
+/**
+ * 
+ * @returns App component with NavigationContainer and Stack Navigator
+ */
 
 function App() {
   useDeviceContext(tw);

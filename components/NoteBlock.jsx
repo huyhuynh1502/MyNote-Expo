@@ -19,7 +19,7 @@ const NoteBlock = ({item, navigation}) => {
     return (
         // TouchableOpacity to make the block clickable and more easy to layout
         <TouchableOpacity 
-            style={tw`bg-gray-100 rounded rounded-3 mx-auto w-[92%] my-2`}
+            style={tw`bg-gray-100 rounded rounded-3 mx-auto w-[92%] my-2 shadow-md`}
             onPress={() => 
                 navigation.navigate('SingleNote', {data: item})
             }

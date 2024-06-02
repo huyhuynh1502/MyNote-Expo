@@ -42,8 +42,8 @@ const HomePage = ({ navigation }) => {
     //Function to render NoteBlock with MasonryList prop
     const renderItem = ({ item }) => (      
         <NoteBlock 
-            item = {item}
-            navigation={navigation}
+            item = { item }
+            navigation={ navigation }
         />
     )
 
@@ -51,7 +51,7 @@ const HomePage = ({ navigation }) => {
         <View style={tw`bg-white flex flex-1`}>
             {/* Search box for finding notes */}
             <TextInput
-            style={tw`mx-2 my-1 p-2 rounded rounded-3 bg-gray-200 text-lg`}
+            style={tw`mx-2 my-1 p-2 rounded rounded-3 bg-gray-200 text-lg shadow-md`}
             placeholder="Search"
             onChangeText={handleSearchChange}
             value={search}
@@ -75,15 +75,14 @@ const HomePage = ({ navigation }) => {
 
             {/* Floating button to add new note */}
             <TouchableOpacity 
-                style={tw`absolute w-12 h-12 justify-center items-center right-5 bottom-5 bg-gray-600 rounded-full`}
+                style={tw`absolute w-13 h-13 justify-center items-center right-5 bottom-5 bg-gray-500 rounded-full shadow-lg`}
 
                 onPress={() => {
                     addNote({title: '', content: ''});
                 }}
             >
-                <Text style={tw`text-xl text-white`}>
-                    {/* Need to implement icon library */}
-                    ADD
+                <Text style={tw`text-xl text-white text-3xl mb-2`}>
+                    +
                 </Text>
             </TouchableOpacity>
         </View>
