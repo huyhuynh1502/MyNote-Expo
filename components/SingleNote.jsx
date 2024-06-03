@@ -1,6 +1,6 @@
 import React, {useEffect, useState, useRef, useLayoutEffect} from 'react'
 import { TextInput, SafeAreaView, Button, TouchableOpacity, Text } from 'react-native';
-import tw from 'twrnc';
+import tw, { useAppColorScheme } from 'twrnc';
 import { NavigationContainer } from '@react-navigation/native';
 import { useUpdateNoteMutation, useDeleteNoteMutation } from '../db';
 /**
@@ -16,6 +16,9 @@ import { useUpdateNoteMutation, useDeleteNoteMutation } from '../db';
  */
 
 const SingleNote = ({ navigation, route }) => {
+    //twrnc hooks to change the color scheme
+    const [colorScheme, toggleColorScheme, setColorScheme] = useAppColorScheme(tw);
+    
     /*
     Set RTK Query variables
     */
@@ -92,7 +95,7 @@ const SingleNote = ({ navigation, route }) => {
 
 
     /*
-    Creat delete button on the top navigation bar
+    Creat delete button on the top right navigation bar
     When press button, isDelete is set to false and the app will redirect to the Home page -> call the useEffect hook above.
     */
     const deleteButton = () => {
@@ -109,22 +112,26 @@ const SingleNote = ({ navigation, route }) => {
         );
     }
 
-    useEffect(() => {
+    useLayoutEffect(() => {
         navigation.setOptions({
             headerRight: () => (
                 deleteButton()
             ),
+            headerStyle: colorScheme === 'light' ? tw`bg-white` : tw`bg-gray-900`,
+            headerTitleStyle: colorScheme === 'light' ? tw`text-black` : tw`text-white`,
+            headerTintColor: colorScheme === 'light' ? 'black' : 'white',
+            headerShadowVisible: false,
         });
-    }, [navigation]);
-    
+    }, [navigation, colorScheme]);
+
 
     //Display all components for SingleNote
     return (
-        <SafeAreaView style={tw`flex-1 bg-white h-100vh p-3`}>
+        <SafeAreaView style={tw`flex-1 bg-white h-100vh p-3 dark:bg-gray-900`}>
             {/* Text input for title */}
             <TextInput 
                 ref={titleInputRef}   //Focus on text input
-                style={tw`text-2xl font-bold my-5 px-3`}
+                style={tw`text-2xl font-bold my-5 px-3 dark:text-white`}
                 placeholder='Untitled'
                 placeholderTextColor='gray'
                 value = {title}
@@ -136,7 +143,7 @@ const SingleNote = ({ navigation, route }) => {
 
             {/* Text input for content */}
             <TextInput 
-                style={tw`flex-1 text-xl px-3`}
+                style={tw`flex-1 text-xl px-3 dark:text-white`}
                 value = {content}
                 placeholder='Start writing your note here'
                 placeholderTextColor='gray'

@@ -94,6 +94,7 @@ const HomePage = ({ navigation }) => {
 
             headerStyle: lightMode ? tw`bg-white` : tw`bg-gray-900`,
             headerTitleStyle: lightMode ? tw`text-black` : tw`text-white`,
+            headerShadowVisible: false,
         });
     }, [navigation, lightMode, colorScheme]);
 
