@@ -59,13 +59,13 @@ const HomePage = ({ navigation }) => {
     const toDarkModeButton = () => {
         return (
             <TouchableOpacity
-                style={tw`ml-3`}
+                style={tw`mx-3`}
                 onPress={() => {
                     setLightMode(false);
                     toggleColorScheme();
                 }}
             >
-                <Text style={tw`text-2xl`}>🌑</Text>
+                <Text style={tw`text-3xl`}>🌑</Text>
             </TouchableOpacity>
         );
     }
@@ -73,13 +73,13 @@ const HomePage = ({ navigation }) => {
     const toLightModeButton = () => {
         return (
             <TouchableOpacity
-                style={tw`ml-3`}
+                style={tw`mx-3`}
                 onPress={() => {
                     setLightMode(true);
                     toggleColorScheme();
                 }}
             >
-                <Text style={tw`text-2xl`}>☀️</Text>
+                <Text style={tw`text-3xl`}>☀️</Text>
             </TouchableOpacity>
 
         );
@@ -107,6 +107,7 @@ const HomePage = ({ navigation }) => {
             style={tw`mx-2 my-1 p-2 rounded rounded-3 bg-gray-200 text-lg 
             light: shadow-md dark:bg-gray-700 dark:text-white`}
             placeholder="Search"
+            placeholderTextColor={'gray'}
             onChangeText={handleSearchChange}
             value={search}
             />
@@ -130,14 +131,14 @@ const HomePage = ({ navigation }) => {
 
             {/* Floating button to add new note */}
             <TouchableOpacity 
-                style={tw`absolute w-13 h-13 justify-center items-center right-5 bottom-5 bg-gray-500 rounded-full
+                style={tw`absolute w-15 h-15 justify-center items-center right-5 bottom-15 bg-gray-500 rounded-full
                 light:shadow-lg`}
 
                 onPress={() => {
                     addNote({title: '', content: ''});
                 }}
             >
-                <Text style={tw`text-xl text-white text-3xl mb-2`}>
+                <Text style={tw`text-xl text-white text-3xl mb-1`}>
                     +
                 </Text>
             </TouchableOpacity>

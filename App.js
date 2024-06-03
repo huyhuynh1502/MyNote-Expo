@@ -1,4 +1,4 @@
-import { SafeAreaView, Text, View, StyleSheet } from 'react-native';
+import { SafeAreaView, Text, View, StyleSheet, Appearance } from 'react-native';
 import tw, { useDeviceContext, useAppColorScheme } from 'twrnc';
 import { Provider } from 'react-redux';
 import { store } from './store';
@@ -28,14 +28,14 @@ function App() {
     initialColorScheme: `light`, 
     // 'light' | 'dark' | 'device'
   });
-
   
+
   //Render the app
   return (
     <Provider store={store}>
 
       {/* Base safe area view -> background layout for the application */}
-      <SafeAreaView style={tw`w-full h-100vh`}>
+      <View style={tw`w-full h-100vh`}>
         <NavigationContainer>
           <Stack.Navigator>
             {/* Home screen set to Home */}
@@ -58,7 +58,7 @@ function App() {
 
           </Stack.Navigator>
         </NavigationContainer>
-      </SafeAreaView>
+      </View>
     </Provider>
   )
 }

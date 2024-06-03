@@ -1,5 +1,5 @@
 import React, {useEffect, useState, useRef, useLayoutEffect} from 'react'
-import { TextInput, SafeAreaView, Button, TouchableOpacity, Text } from 'react-native';
+import { TextInput, SafeAreaView, Button, TouchableOpacity, Text, KeyboardAvoidingView, Platform, Keyboard } from 'react-native';
 import tw, { useAppColorScheme } from 'twrnc';
 import { NavigationContainer } from '@react-navigation/native';
 import { useUpdateNoteMutation, useDeleteNoteMutation } from '../db';
@@ -127,7 +127,12 @@ const SingleNote = ({ navigation, route }) => {
 
     //Display all components for SingleNote
     return (
-        <SafeAreaView style={tw`flex-1 bg-white h-100vh p-3 dark:bg-gray-900`}>
+        <KeyboardAvoidingView 
+            style={tw`flex bg-white h-100vh p-3 dark:bg-gray-900`}
+            //Avoid keyboard 
+            //Soure from React Native Documentation
+            //URL: https://reactnative.dev/docs/keyboardavoidingview
+            behavior={Platform.OS === 'ios' ? 'padding' : 'height'}>
             {/* Text input for title */}
             <TextInput 
                 ref={titleInputRef}   //Focus on text input
@@ -143,7 +148,7 @@ const SingleNote = ({ navigation, route }) => {
 
             {/* Text input for content */}
             <TextInput 
-                style={tw`flex-1 text-xl px-3 dark:text-white`}
+                style={[tw`flex-1 text-xl px-3 dark:text-white`, {textAlignVertical: 'top'}]}
                 value = {content}
                 placeholder='Start writing your note here'
                 placeholderTextColor='gray'
@@ -152,7 +157,7 @@ const SingleNote = ({ navigation, route }) => {
                 multiline
             />
             
-        </SafeAreaView> 
+        </KeyboardAvoidingView> 
     )
 }
 
